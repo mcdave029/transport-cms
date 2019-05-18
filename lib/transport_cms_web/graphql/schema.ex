@@ -17,9 +17,10 @@ defmodule TransportCmsWeb.Graphql.Schema do
     end
 
     @desc "Get specific transport"
-    field :transport, :transport do
+    field :transport, :transport_payload do
       arg :id, non_null(:id)
       resolve &Resolvers.Content.find_transport/3
+      middleware &build_payload/2
     end
   end
 

@@ -1,4 +1,5 @@
 defmodule TransportCmsWeb.Graphql.Resolvers.Content do
+  alias AbsintheErrorPayload.ValidationMessage
 
   def list_transports(_parent, _args, _resolution) do
     { :ok, TransportCms.Content.list_transports() }
@@ -6,10 +7,8 @@ defmodule TransportCmsWeb.Graphql.Resolvers.Content do
 
   def find_transport(_parent, %{id: id}, _resolution) do
     case TransportCms.Content.find_transport(id) do
-      nil ->
-        { :error, "Transport ID #{id} not found!"}
-      transport ->
-        { :ok, transport }
+      nil -> {:ok, %ValidationMessage{field: :id, code: "not found", message: "does not exist"}}
+      transport -> {:ok, transport}
     end
   end
 
