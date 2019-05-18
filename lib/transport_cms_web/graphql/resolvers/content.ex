@@ -1,4 +1,5 @@
 defmodule TransportCmsWeb.Graphql.Resolvers.Content do
+
   def list_transports(_parent, _args, _resolution) do
     { :ok, TransportCms.Content.list_transports() }
   end
@@ -9,6 +10,13 @@ defmodule TransportCmsWeb.Graphql.Resolvers.Content do
         { :error, "Transport ID #{id} not found!"}
       transport ->
         { :ok, transport }
+    end
+  end
+
+  def create_transport(_parent, args, _resolution) do
+    case TransportCms.Content.create_transport(args) do
+      {:ok, user} -> {:ok, user}
+      {:error, %Ecto.Changeset{} = changeset} -> {:ok, changeset}
     end
   end
 end

@@ -13,5 +13,6 @@ defmodule TransportCms.Transport do
     transport
     |> cast(attrs, [:name])
     |> validate_required([:name])
+    |> validate_length(:name, min: 7)
   end
 end
