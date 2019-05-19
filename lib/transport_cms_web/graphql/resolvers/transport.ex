@@ -4,7 +4,10 @@ defmodule TransportCmsWeb.Graphql.Resolvers.Transport do
   alias TransportCms.{ Repo, Transport }
 
   def list_transports(args) do
+    search_term = get_in(args, [:query])
+
     Transport
+    |> Transport.search(search_term)
     |> Connection.from_query(&Repo.all/1, args)
   end
 

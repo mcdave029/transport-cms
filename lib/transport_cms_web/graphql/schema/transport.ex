@@ -16,6 +16,7 @@ defmodule TransportCmsWeb.Graphql.Schema.Transport do
   object :transport_queries do
     @desc "Get all transports"
     connection field :transports, node_type: :transport do
+      arg :query, :string
       resolve fn
         pagination_args, %{} ->
           Resolvers.Transport.list_transports(pagination_args)
