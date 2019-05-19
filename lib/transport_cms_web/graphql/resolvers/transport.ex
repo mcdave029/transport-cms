@@ -1,4 +1,4 @@
-defmodule TransportCmsWeb.Graphql.Resolvers.Content do
+defmodule TransportCmsWeb.Graphql.Resolvers.Transport do
   alias AbsintheErrorPayload.ValidationMessage
 
   def list_transports(_parent, _args, _resolution) do
@@ -12,8 +12,8 @@ defmodule TransportCmsWeb.Graphql.Resolvers.Content do
     end
   end
 
-  def create_transport(_parent, args, _resolution) do
-    case TransportCms.Content.create_transport(args) do
+  def create_transport(_parent, %{input: input}, _resolution) do
+    case TransportCms.Content.create_transport(input) do
       {:ok, user} -> {:ok, user}
       {:error, %Ecto.Changeset{} = changeset} -> {:ok, changeset}
     end
