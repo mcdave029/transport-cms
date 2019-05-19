@@ -1,7 +1,9 @@
 defmodule TransportCmsWeb.Graphql.Schema.Transport do
   use Absinthe.Schema.Notation
+  use Absinthe.Relay.Schema.Notation, :modern
 
   alias TransportCmsWeb.Graphql.Resolvers
+  alias Absinthe.Relay.Connection
 
   import AbsintheErrorPayload.Payload
 
@@ -13,8 +15,11 @@ defmodule TransportCmsWeb.Graphql.Schema.Transport do
 
   object :transport_queries do
     @desc "Get all transports"
-    field :transports, list_of(:transport) do
-      resolve &Resolvers.Transport.list_transports/3
+    connection field :transports, node_type: :transport do
+      resolve fn
+        pagination_args, %{} ->
+          Resolvers.Transport.list_transports(pagination_args)
+      end
     end
 
     @desc "Get specific transport"

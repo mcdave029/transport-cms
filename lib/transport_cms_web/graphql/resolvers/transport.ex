@@ -1,8 +1,11 @@
 defmodule TransportCmsWeb.Graphql.Resolvers.Transport do
   alias AbsintheErrorPayload.ValidationMessage
+  alias Absinthe.Relay.Connection
+  alias TransportCms.{ Repo, Transport }
 
-  def list_transports(_parent, _args, _resolution) do
-    { :ok, TransportCms.Content.list_transports() }
+  def list_transports(args) do
+    Transport
+    |> Connection.from_query(&Repo.all/1, args)
   end
 
   def find_transport(_parent, %{id: id}, _resolution) do
