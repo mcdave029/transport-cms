@@ -23,7 +23,7 @@ defmodule TransportCmsWeb.Graphql.Schema.Transport do
       end
     end
 
-    @desc "Get specific transport"
+    @desc "Get specific transport test"
     field :transport, :transport_payload do
       arg :id, non_null(:id)
       resolve &Resolvers.Transport.find_transport/3
