@@ -19,6 +19,17 @@ defmodule TransportCmsWeb.Router do
     get "/", PageController, :index
   end
 
+  scope "/api" do
+    pipe_through :api
+
+    forward "/graphiql", Absinthe.Plug.GraphiQL,
+      schema: TransportCmsWeb.Graphql.Schema
+
+    forward "/", Absinthe.Plug,
+      schema: TransportCmsWeb.Graphql.Schema
+
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", TransportCmsWeb do
   #   pipe_through :api
